@@ -25,10 +25,30 @@ userDetails:any={
   ngOnInit(): void {
   }
 
-  login()
+  // login()
+  // {
+  //   var acnum=this.acno
+  //   var pas=this.pass
+  //   let userDetails=this.userDetails
+  //   if(acnum in userDetails)
+  //   {
+  //     if(pas==userDetails[acnum]['pass'])
+  //     {
+  //       alert("Login Successful")
+  //     }
+  //     else{
+  //       alert("Incorrect Password")
+  //     }
+  //   }
+  //   else{
+  //     alert("Account number doesn't exist")
+  //   }
+    
+  // }
+  login(a:any,b:any)
   {
-    var acnum=this.acno
-    var pas=this.pass
+    var acnum=a.value
+    var pas=b.value
     let userDetails=this.userDetails
     if(acnum in userDetails)
     {
@@ -43,18 +63,6 @@ userDetails:any={
     else{
       alert("Account number doesn't exist")
     }
-    
-  }
-  acChange(event:any)
-  {
-this.acno=event.target.value
-console.log(this.acno);
-
-  }
-  pasChange(event:any)
-  {
-    this.pass=event.target.value
-    console.log(this.pass);
     
   }
 }
