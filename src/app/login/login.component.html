@@ -1,0 +1,11 @@
+<div><h3>{{aim}}</h3></div>
+    <div class="col-24 container w-50 mt-5 bg-light rounded p-5">
+        <div class="d-grid">
+             <h4 class="pt-4 pb-4 fw-bold mx-auto" style=color:rgb(67,95,153);>Sign In</h4>
+             <input type="text" [placeholder]="acnt" (change)="acChange($event)" class="mb-4 p-2 col-md-12 col-lg-12 col-sm-12" id="aid">   
+             <input type="text" [placeholder]="pss" (change)="pasChange($event)" class="mb-5 p-2 " id="pid">   
+             <button class="mb-4 mx-auto" (click)="login()" type="button" >SIGN IN</button>
+            <i class="mx-auto">Dont have an account? <a href="signreg.html" >Register</a> </i> 
+             <br><br>
+        </div>
+        </div>

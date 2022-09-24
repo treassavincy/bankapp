@@ -1,0 +1,33 @@
+
+input{
+border: none;
+border-radius: 10px;
+    box-shadow: 5px 2px 5px 2px rgb(109, 114, 124);
+  
+
+}
+button{
+    height: 50px; ;
+    width:250px ;
+    background-color:rgb(67, 95, 153) ;
+    color: white;
+    border-radius: 30px;
+}
+a{
+    color: rgb(67, 95, 153);
+    text-decoration: none;
+}
+@media (min-width:350px)
+{
+input{
+    width: 100%;
+}
+button{
+    width: 100%; 
+}
+
+}
+button:hover{
+    color: white;
+    background-color: gray;
+}
