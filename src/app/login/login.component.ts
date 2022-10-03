@@ -1,68 +1,42 @@
-import { Component, OnInit } from '@angular/core';
 
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ServiceService } from '../services/service.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+   aim='Your perfect banking patner'
+   acnt='Enter your account number'
+   psw='Enter your password'
+     
+  
+   acno=''
+pswd=''
+  //  userDetails:any={
+  //   1000:{acno:1000,username:'amal',password:123,balance:100000},
+  //   1001:{acno:1001,username:'banu',password:123,balance:10000},
+  //   1002:{acno:1000,username:'morbis',password:123,balance:4000000},
+  //   1003:{acno:1000,username:'sachin',password:123,balance:800000},
+  //  }
 
-  aim="Your Perfect Banking Partner"
-  acnt="Account Number"
-  pss="Password"
-acno=" "
-pass=" "
-userDetails:any={
-  1000:{acno:1000,uname:'amal',pass:123,bal:100000},
-  1001:{acno:1001,uname:'binu',pass:123,bal:200000},
-  1002:{acno:1002,uname:'joyce',pass:123,bal:50000},
-  1003:{acno:1003,uname:'noel',pass:123,bal:350000},
-  1004:{acno:1004,uname:'sania',pass:123,bal: 400000}
-}
 
-  constructor() { }
+  constructor(private router:Router,private ds:ServiceService) { }
 
   ngOnInit(): void {
   }
-
-  // login()
-  // {
-  //   var acnum=this.acno
-  //   var pas=this.pass
-  //   let userDetails=this.userDetails
-  //   if(acnum in userDetails)
-  //   {
-  //     if(pas==userDetails[acnum]['pass'])
-  //     {
-  //       alert("Login Successful")
-  //     }
-  //     else{
-  //       alert("Incorrect Password")
-  //     }
-  //   }
-  //   else{
-  //     alert("Account number doesn't exist")
-  //   }
-    
-  // }
-  login(a:any,b:any)
-  {
-    var acnum=a.value
-    var pas=b.value
-    let userDetails=this.userDetails
-    if(acnum in userDetails)
-    {
-      if(pas==userDetails[acnum]['pass'])
-      {
-        alert("Login Successful")
-      }
-      else{
-        alert("Incorrect Password")
-      }
+                        
+  login(){
+     var acnum=this.acno
+     var pswd= this.pswd
+  const result=this.ds.login(acnum,pswd)
+    if(result){
+      alert("Login Successful")
+      this.router.navigateByUrl('dashboard')
     }
-    else{
-      alert("Account number doesn't exist")
-    }
-    
   }
+
 }
+

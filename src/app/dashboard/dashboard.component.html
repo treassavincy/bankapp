@@ -1,0 +1,28 @@
+<p>Dashboard of Bank App</p>
+<h1 class="text-white ms-4">Welcome {{user}} !</h1>
+<a href="" routerLink="/transaction" class=" text-white ms-auto float-end me-5" style="text-decoration: underline;">Transaction History</a>
+<div class="col-24 container w-50 mt-5 bg-light rounded p-5">
+    <div class="d-grid">
+      <h4 class="pt-4 pb-4 fw-bold mx-auto" style=color:rgb(67,95,153);>Deposit </h4> 
+             <form (ngSubmit)="deposit()">
+                      <input name="acn" type="text"  placeholder="Enter AcNumber"  [(ngModel)]="acnum" class="mb-4 p-2 col-md-12 col-lg-12 col-sm-12" id="acn">
+                      <input  name="pswrd"  type="password"  placeholder="Enter Password" [(ngModel)]="pswrd" class="mb-4 p-2 " id="pswrd">
+                      <input  name="amt"  type="text"  placeholder="Enter Amount"   [(ngModel)]="amnt"   class="mb-5 p-2 " id="amt">
+                      <button class="mb-4 mx-auto"    type="submit">Deposit</button>
+          </form>
+               </div>
+              </div>
+              <div class="col-24 container w-50 mt-5 bg-light rounded p-5">
+                <div class="d-grid">
+                  <h4 class="pt-4 pb-4 fw-bold mx-auto" style=color:rgb(67,95,153);>Withdraw </h4> 
+                  <form (ngSubmit)="withdraw()">
+                    <input name="acn1" type="text"  placeholder="Enter AcNumber"  [(ngModel)]="acnum1" class="mb-4 p-2 col-md-12 col-lg-12 col-sm-12" id="acn1">
+                    <input  name="pswrd1"  type="password"  placeholder="Enter Password"   [(ngModel)]="pswrd1"  class="mb-4 p-2 " id="pswrd1">
+                    <input  name="amt1"  type="text"  placeholder="Enter Amount"    [(ngModel)]="amnt1" class="mb-5 p-2 " id="amt1">
+                    <button class="mb-4 mx-auto"    type="submit">Withdraw</button>
+        </form>
+        
+                           </div>
+                          </div>
+
+            

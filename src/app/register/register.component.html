@@ -1,0 +1,15 @@
+    
+   
+         <div class="col-24 container w-50 mt-5 bg-light rounded p-5">
+          <div class="d-grid">
+            <h4 class="pt-4 pb-4 fw-bold mx-auto" style=color:rgb(67,95,153);>Register </h4> 
+                <form (ngSubmit)="register()">
+                            <input name="usern" type="text"  placeholder="Enter Username"  [(ngModel)]="usern" class="mb-4 p-2 col-md-12 col-lg-12 col-sm-12" id="uname">
+                            <input  name="acn"  type="text"  placeholder="Enter AcNumber"  [(ngModel)]="acn"   class="mb-4 p-2 " id="acnn">
+                            <input  name="pswrd"  type="password"  placeholder="Enter Password"   [(ngModel)]="pswrd"  class="mb-5 p-2 " id="pswr">
+                            <!-- <button class="mb-4 mx-auto"  (click)="register()"  type="button">Register</button> -->
+                            <button class="mb-4 mx-auto"    type="submit">Register</button>
+                </form>
+                     </div>
+                    </div>
+                  
