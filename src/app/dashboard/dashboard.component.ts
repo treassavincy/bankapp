@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ServiceService } from '../services/service.service';
 
 @Component({
@@ -7,41 +9,97 @@ import { ServiceService } from '../services/service.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  user=''
+  currentuser=''
+  
   acnum=''
   pswrd=''
   amnt=''
 
-  acnum1=''
-  pswrd1=''
-  amnt1=''
-  constructor(private ds:ServiceService) { 
-    this.user=ds.user
+
+
+  acnumber:any
+  sdetails:any
+  registerForm=this.fb.group({acnum:['',[Validators.required,Validators.pattern('[0-9]+')]],pswrd:['',[Validators.required,Validators.pattern('[0-9]+')]],amnt:['',[Validators.required,Validators.pattern('[0-9]+')]]})  
+  register1Form=this.fb.group({acnum:['',[Validators.required,Validators.pattern('[0-9]+')]],pswrd:['',[Validators.required,Validators.pattern('[0-9]+')]],amnt:['',[Validators.required,Validators.pattern('[0-9]+')]]})  
+  constructor(private ds:ServiceService,private fb:FormBuilder,private router:Router) { 
+    if(localStorage.getItem('currentuser')){
+      this.currentuser=JSON.parse(localStorage.getItem('currentuser') || '')
+    }
+
+    this.sdetails=new Date()
   }
 
   ngOnInit(): void {
+    if(!localStorage.getItem('token'))
+    {
+      alert('login first')
+      this.router.navigateByUrl('')
+    }
   }
   deposit()
   {
-    var acnum=this.acnum
-    var pswrd=this.pswrd
-    var amnt=this.amnt
-const result=this.ds.deposit(acnum,pswrd,amnt)
-if(result)
-{
-  alert(`${amnt} is credited,new balance is ${result}`)
+    var acnum=this.registerForm.value.acnum
+    var pswrd=this.registerForm.value.pswrd
+    var amnt=this.registerForm.value.amnt
+
+if(this.registerForm.valid){
+  this.ds.deposit(acnum,pswrd,amnt).subscribe((result:any)=>{
+    alert(result.message)
+    },
+    result=>{
+      alert(result.error.message)
+    }
+    )
 }
-  }
+else{
+  alert('Invalid Input')
+ }
+}
+
   withdraw()
   {
-    var acnum1=this.acnum1
-    var pswrd1=this.pswrd1
-    var amnt1=this.amnt1
-    const result=this.ds.withdraw(acnum1,pswrd1,amnt1)
-if(result)
+    var acnum=this.register1Form.value.acnum
+    var pswrd=this.register1Form.value.pswrd
+    var amnt=this.register1Form.value.amnt
+
+if(this.register1Form.valid)
 {
-  alert(`${amnt1} is debited,new balance is ${result}`)
+  this.ds.withdraw(acnum,pswrd,amnt).subscribe((result:any)=>{
+    alert(result.message)
+    },
+    result=>{
+      alert(result.error.message)
+    }
+    )
 }
+else{
+  alert('Invalid Input')
+ }
   }
 
+logout(){
+  localStorage.removeItem('user')
+  localStorage.removeItem('currentacno')
+  localStorage.removeItem('token')
+  this.router.navigateByUrl('')
+}
+
+deleteconfirm()
+{
+  this.acnumber=JSON.parse(localStorage.getItem('currentacno') || '')
+}
+oncancel(){
+  this.acnumber=''
+}
+onDelete(event:any){
+// alert(event)
+this.ds.deleteAcc(event).subscribe((result:any)=>{
+  alert(result.message)
+  this.logout()
+},
+result=>{
+  alert(result.error.message)
+}
+)
+}
 }

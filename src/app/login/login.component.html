@@ -4,11 +4,13 @@
    
          <div class="col-24 container w-50 mt-5 bg-light rounded p-5">
           <div class="d-grid">
-            <h4 class="pt-4 pb-4 fw-bold mx-auto" style=color:rgb(67,95,153);>Sign In </h4>
-                  <form (ngSubmit)="login()">
-                            <input name="acno" type="text"  [placeholder]="acnt" [(ngModel)]="acno"  class="mb-4 p-2 col-md-12 col-lg-12 col-sm-12">
-                            <input  name="pswd"  type="password"  [placeholder]="psw"   [(ngModel)]="pswd" class="mb-5 p-2 ">
-                             <button class="mb-4 mx-auto"   type="submit">SIGN IN</button>
+            <h4 class="pt-4 pb-4 fw-bold mx-auto" style=color:rgb(67,95,153);>Log In </h4>
+                  <form (ngSubmit)="login()" [formGroup]="registerForm" >
+                            <input formControlName="acno" type="text"  [placeholder]="acnt" [(ngModel)]="acno"  class="mb-4 p-2 col-md-12 col-lg-12 col-sm-12">
+                            <div *ngIf="this.registerForm.get('acno')?.errors&&this.registerForm.get('acno')?.touched"><p>Invalid Acno</p></div>
+                            <input  formControlName="pswd"  type="password"  [placeholder]="psw"   [(ngModel)]="pswd" class="mb-5 p-2 ">
+                            <div *ngIf="this.registerForm.get('pswd')?.errors&&this.registerForm.get('pswd')?.touched"><p>Invalid Password</p></div>
+                            <button class="mb-4 mx-auto"   type="submit">LOG IN</button>
                   </form>
                          <i class="mx-auto">Dont have an account? <a href="" routerLink="register" >Register</a> </i> 
                      </div>

@@ -1,24 +1,35 @@
 <p>Dashboard of Bank App</p>
-<h1 class="text-white ms-4">Welcome {{user}} !</h1>
+<div><h3 class="text-white">{{sdetails | date:'short'}}</h3></div>
+<h1 class="text-white ms-4">Welcome {{currentuser}} !</h1>
+<!-- <a href="" routerLink="" class=" text-white ms-auto float-end me-5" style="text-decoration: underline;">Logout</a> -->
+<button (click)="logout()" class="bb me-end">Logout</button>
+<button  class="bb me-end" (click)="deleteconfirm()">Delete</button>
+<app-delconfirm (onCancel)="oncancel()" (onDelete)="onDelete($event)" [item]="acnumber"></app-delconfirm>
 <a href="" routerLink="/transaction" class=" text-white ms-auto float-end me-5" style="text-decoration: underline;">Transaction History</a>
-<div class="col-24 container w-50 mt-5 bg-light rounded p-5">
-    <div class="d-grid">
-      <h4 class="pt-4 pb-4 fw-bold mx-auto" style=color:rgb(67,95,153);>Deposit </h4> 
-             <form (ngSubmit)="deposit()">
-                      <input name="acn" type="text"  placeholder="Enter AcNumber"  [(ngModel)]="acnum" class="mb-4 p-2 col-md-12 col-lg-12 col-sm-12" id="acn">
-                      <input  name="pswrd"  type="password"  placeholder="Enter Password" [(ngModel)]="pswrd" class="mb-4 p-2 " id="pswrd">
-                      <input  name="amt"  type="text"  placeholder="Enter Amount"   [(ngModel)]="amnt"   class="mb-5 p-2 " id="amt">
+<div class="col-24 container w-50 mt-5 bg-light rounded p-5 " [ngClass]="acnumber?'style1':''">
+    <div class="d-grid" >
+      <h4 class="pt-4 pb-4 fw-bold mx-auto" style=color:#435f99; >Deposit </h4> 
+             <form (ngSubmit)="deposit()" [formGroup]="registerForm" >
+                      <input formControlName="acnum" type="text"  placeholder="Enter AcNumber"  [(ngModel)]="acnum" class="mb-4 p-2 col-md-12 col-lg-12 col-sm-12" id="acn">
+                      <div *ngIf="this.registerForm.get('acnum')?.errors&&this.registerForm.get('acnum')?.touched"><p>Invalid Acno</p></div>
+                      <input  formControlName="pswrd"  type="password"  placeholder="Enter Password" [(ngModel)]="pswrd" class="mb-4 p-2 " id="pswrd">
+                     <div *ngIf="this.registerForm.get('pswrd')?.errors&&this.registerForm.get('pswrd')?.touched"><p>Invalid Password</p></div>
+                      <input formControlName="amnt"  type="text"  placeholder="Enter Amount"   [(ngModel)]="amnt"   class="mb-5 p-2 " id="amt">
+                      <div *ngIf="this.registerForm.get('amnt')?.errors&&this.registerForm.get('amnt')?.touched"><p>Invalid Amount</p></div>
                       <button class="mb-4 mx-auto"    type="submit">Deposit</button>
           </form>
                </div>
               </div>
               <div class="col-24 container w-50 mt-5 bg-light rounded p-5">
-                <div class="d-grid">
+                <div class="d-grid" >
                   <h4 class="pt-4 pb-4 fw-bold mx-auto" style=color:rgb(67,95,153);>Withdraw </h4> 
-                  <form (ngSubmit)="withdraw()">
-                    <input name="acn1" type="text"  placeholder="Enter AcNumber"  [(ngModel)]="acnum1" class="mb-4 p-2 col-md-12 col-lg-12 col-sm-12" id="acn1">
-                    <input  name="pswrd1"  type="password"  placeholder="Enter Password"   [(ngModel)]="pswrd1"  class="mb-4 p-2 " id="pswrd1">
-                    <input  name="amt1"  type="text"  placeholder="Enter Amount"    [(ngModel)]="amnt1" class="mb-5 p-2 " id="amt1">
+                  <form (ngSubmit)="withdraw()"  [formGroup]="register1Form">
+                    <input formControlName="acnum" type="text"  placeholder="Enter AcNumber"  [(ngModel)]="acnum" class="mb-4 p-2 col-md-12 col-lg-12 col-sm-12" id="acn1">
+                    <div *ngIf="this.register1Form.get('acnum')?.errors&&this.register1Form.get('acnum')?.touched"><p>Invalid Acno</p></div>
+                    <input  formControlName="pswrd"  type="password"  placeholder="Enter Password"   [(ngModel)]="pswrd"  class="mb-4 p-2 " id="pswrd1">
+                    <div *ngIf="this.register1Form.get('pswrd')?.errors&&this.register1Form.get('pswrd')?.touched"><p>Invalid Password</p></div>
+                    <input  formControlName="amnt"  type="text"  placeholder="Enter Amount"    [(ngModel)]="amnt" class="mb-5 p-2 " id="amt1">
+                    <div *ngIf="this.register1Form.get('amnt')?.errors&&this.register1Form.get('amnt')?.touched"><p>Invalid Amount</p></div>  
                     <button class="mb-4 mx-auto"    type="submit">Withdraw</button>
         </form>
         

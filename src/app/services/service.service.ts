@@ -1,108 +1,57 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+const options={
+  headers:new HttpHeaders()     //overloaed header
+}
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceService {
-
-  user:any=''
-  currentacno:any=''
-  userDetails:any={
-    1000:{acno:1000,username:'amal',password:123,balance:100000,transaction:[]},
-    1001:{acno:1001,username:'banu',password:123,balance:10000,transaction:[]},
-    1002:{acno:1002,username:'morbis',password:123,balance:4000000,transaction:[]},
-    1003:{acno:1003,username:'sachin',password:123,balance:800000,transaction:[]},
-   }
-
-  constructor() { }
+  constructor(private http:HttpClient) {  }
   register(acno:any,username:any,password:any){
-let userDetails=this.userDetails
-if(acno in userDetails)
-{
-  return false
-}
-else{
-  userDetails[acno]={acno,username,password,balance:0}
-  console.log(userDetails);
-    return true
-}
+    const data={acno,username,password}
+   return this.http.post('http://localhost:3000/register',data)
   }
 
-  login(acnum:any,pswd:any){
-    
-    let userDetails=this.userDetails
-    if (acnum in userDetails)
-    {
-      if(pswd==userDetails[acnum]['password']){
-        this.user=userDetails[acnum]['username']
-        this.currentacno=acnum
-        return true
-           }
-       else {
-               alert('Incorrect Password')
-               return false
-       }
-   }
-   else{
-     alert('User Doesnt Exist')
-     return false
-   }
-   
+  login(acno:any,pswd:any){
+    const data={acno,pswd}
+    return this.http.post('http://localhost:3000/login',data)
+ 
+ }
+
+ getToken(){
+  const token=JSON.parse(localStorage.getItem('token') || '')
+  let headers=new HttpHeaders()
+  if(token)
+  {
+    options.headers=headers.append('token',token)
+  }
+  return options
+
  }
  deposit(acnum:any,pswrd:any,amnt:any){
-  let userDetails=this.userDetails
 var amount=parseInt(amnt)
-if (acnum in userDetails)
-{
-  if(pswrd==userDetails[acnum]['password'])
-{
-  userDetails[acnum]['balance']+=amount
-  userDetails[acnum]['transaction'].push({type:'Credit',amount})
-  return userDetails[acnum]['balance']
- 
-}
-else{
-  alert("Incorrect Password")
-}
-}
-else{
-  alert("User Doesnt Exist")
-  return false
-}
+const data={acnum,pswrd,amnt}
+return this.http.post('http://localhost:3000/deposit',data,this.getToken())
+
  }
- withdraw(acnum1:any,pswrd1:any,amnt1:any)
+ withdraw(acnum:any,pswrd:any,amnt:any)
  {
-  let userDetails=this.userDetails
-  var amount=parseInt(amnt1)
-if(acnum1 in userDetails)
-{
-  if(pswrd1==userDetails[acnum1]['password'])
-  {
-    if(amount<=userDetails[acnum1]['balance'])
-    {
-      userDetails[acnum1]['balance']-=amount
-      userDetails[acnum1]['transaction'].push({type:'Debit',amount})
-      return userDetails[acnum1]['balance']
-      
-    }
-    else{
-      alert("Insufficient Balance")
-      return false
-    }  
-  }
-  else{
-    alert("Incorrect Password")
-      }
-}
-else{
-  alert("User Doesnt Exist ")
-return false
-    }
+  var amount=parseInt(amnt)
+  const data={acnum,pswrd,amnt}
+return this.http.post('http://localhost:3000/withdraw',data,this.getToken())
+
  }
 
  getTransaction(acno:any,){
-  return this.userDetails[acno]['transaction']
-
+  const data={acno}
+  return this.http.post('http://localhost:3000/transaction',data,this.getToken())
+  
  }
+deleteAcc(acno:any)
+{
+  return this.http.delete('http://localhost:3000/deleteacc/'+acno)
+
+}
 
 }

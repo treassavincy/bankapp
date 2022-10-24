@@ -8,11 +8,15 @@ import { ServiceService } from '../services/service.service';
 })
 export class TransactionComponent implements OnInit {
 acno:any=''
-result:any
+transaction:any
   constructor(private ds:ServiceService) {
-    this.acno=ds.currentacno
-    this.result=this.ds.getTransaction(this.acno)
-    console.log(this.result)
+    this.acno=JSON.parse(localStorage.getItem('currentacno') || '')
+this.ds.getTransaction(this.acno).subscribe((result:any)=>{
+this.transaction=result.transaction
+  },
+  result=>{
+    alert(result.error.message)
+  })
     
    }
 
